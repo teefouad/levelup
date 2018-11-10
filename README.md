@@ -160,3 +160,46 @@ Create a Modal component that accepts content  passed as children. The modal may
   </Modal>
 </div>
 ```
+
+# Challenge 9
+
+Create a language switcher component that allows displaying text in two languages, Arabic and English.
+
+```
+<div className="ex-9">
+  <header>
+    <h1>
+      <a href="/">
+        Twitter
+      </a>
+    </h1>
+
+    <div>
+      <strong>Select a language:</strong>
+      <select>
+        <option>Arabic</option>
+        <option>English</option>
+      </select>
+    </div>
+  </header>
+
+  <section>
+    <article>
+      <h1>The world is beautiful</h1>
+
+      <p>Good things come to those who wait.</p>
+    </article>
+
+    <aside>
+      <h2>Advertisements</h2>
+      
+      <ul>
+        <li />
+        <li />
+        <li />
+        <li />
+      </ul>
+    </aside>
+  </section>
+</div>
+```
