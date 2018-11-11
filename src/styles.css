@@ -479,3 +479,22 @@ button[disabled] {
   border-radius: 5px;
   background: #e0e0e0;
 }
+
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 0, 0,1);
+  border-top: 2px solid #FF5722;
+  border-radius: 99px;
+  animation: 300ms spin infinite ease-in-out;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(359deg);
+  }
+}

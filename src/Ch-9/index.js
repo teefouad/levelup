@@ -1,53 +1,134 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class App extends Component {
-  static propTypes = {
-  };
+const translations = {
+  logo: {
+    en: 'Twitter',
+    ar: 'تويتر',
+  },
+  ads: {
+    en: 'Advertisements',
+    ar: 'إعلانات'
+  },
+  switcherTitle: {
+    en: 'Select a language',
+    ar: 'إختر اللغة'
+  }
+};
 
-  static defaultProps = {
-  };
+const languageContext = React.createContext();
+
+class App extends Component {
+  state = {
+    language: 'ar',
+  }
 
   render() {
     return (
-      <div className="ex-9">
-        <header>
-          <h1>
-            <a href="/">
-              Twitter
-            </a>
-          </h1>
+      <languageContext.Provider value={{
+        language: this.state.language,
+        setLanguage: (language) => {
+          this.setState({
+            language
+          })
+        },
+        translate(id) {
+          return translations[id][this.language];
+        }
+      }}>
+        <div className="ex-9"
+          style={{
+            direction: this.state.language === 'en' ? 'ltr' : 'rtl'
+          }}
+        >
+          <Header />
+          <Content />
+        </div>
+      </languageContext.Provider>
+    );
+  }
+}
 
-          <div>
-            <strong>Select a language:</strong>
-            <select>
-              <option>Arabic</option>
-              <option>English</option>
-            </select>
-          </div>
-        </header>
+class Header extends React.Component {
+  render() {
+    return (
+      <header>
+        <Logo />
+        <Switcher />
+      </header>
+    );
+  }
+}
 
-        <section>
-          <article>
-            <h1>The world is beautiful</h1>
+class Logo extends React.Component {
+  static contextType = languageContext;
 
-            <p>Good things come to those who wait.</p>
-          </article>
+  render() {
+    return (
+      <h1>
+        <a href="/">
+          {this.context.translate('logo')}
+        </a>
+      </h1>
+    );
+  }
+};
 
-          <aside>
-            <h2>Advertisements</h2>
+class Switcher extends React.Component {
+  static propTypes = {
+    language: PropTypes.string,
+  };
 
-            <ul>
-              <li />
-              <li />
-              <li />
-              <li />
-            </ul>
-          </aside>
-        </section>
+  static defaultProps = {
+    language: 'ar',
+  };
+
+  static contextType = languageContext;
+
+  render() {
+    const {
+      language,
+    } = this.context;
+
+    return (
+      <div>
+        <strong>{this.context.translate('switcherTitle')}:</strong>
+
+        <select value={language} onChange={(e) => this.context.setLanguage(e.target.value)}>
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+        </select>
       </div>
     );
   }
 }
+
+
+const Content = (props) => (
+  <section>
+    <Article />
+    <Sidebar />
+  </section>
+);
+
+const Article = () => (
+  <article>
+    <h1>The world is beautiful</h1>
+
+    <p>Good things come to those who wait.</p>
+  </article>
+);
+
+const Sidebar = (props) => (
+  <aside>
+    <h2>Advertisements</h2>
+    <ul>
+      <li />
+      <li />
+      <li />
+      <li />
+    </ul>
+  </aside>
+);
 
 export default App;
