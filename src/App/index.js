@@ -2,20 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Rating from './components/Rating';
 import Counter from './components/Counter';
+import Button from './components/Button';
+import IconButton from './components/IconButton';
+import SaveButton from './components/SaveButton';
 
 class App extends Component {
-  static propTypes = {
-  };
-
-  static defaultProps = {
-  };
-
   render() {
     return (
       <div>
-        <Counter value={5} />
-        <Counter value={0} />
-        <Counter value={10} max={100} />
+        <SaveButton />
+        <IconButton icon="star" onClick={() => alert('IconButton')}>IconButton</IconButton>
+        <Button onClick={() => alert('Button')}>Button</Button>
+        <SaveButton onClick={() => alert('s')}>Test</SaveButton>
       </div>
     );
   }
