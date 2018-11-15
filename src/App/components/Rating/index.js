@@ -7,12 +7,14 @@ class Rating extends Component {
     value: PropTypes.number,
     scale: PropTypes.number,
     stars: PropTypes.number,
+    className: PropTypes.string,
   };
 
   static defaultProps = {
     value: 0,
     scale: 10,
     stars: 5,
+    className: '',
   };
 
   render() {
@@ -20,6 +22,8 @@ class Rating extends Component {
       value,
       scale,
       stars: starsTotal,
+      className,
+      ...props
     } = this.props;
 
     const starsRating = starsTotal * value / scale;
@@ -32,11 +36,17 @@ class Rating extends Component {
         title={`${value} / ${scale}`}
         className={css`
           display: flex;
+          align-items: center;
+          justify-content: center;
+          color: gold;
+          ${className};
         `}
+        {...props}
       >
         <div
           className={css`
             position: relative;
+            letter-spacing: 0.2em;
           `}
         >
           <div
@@ -53,7 +63,7 @@ class Rating extends Component {
 
           <div
             className={css`
-            color: #f0f0f0;
+            color: rgba(220, 220, 220, 0.6);
           `}
           >
             {Array.from(Array(starsTotal)).map((x, index) => <i key={index} className="fa fa-star" />)}
@@ -63,7 +73,6 @@ class Rating extends Component {
         <p
           className={css`
             margin-left: 10px;
-            color: gold;
           `}
         >
           {value}
