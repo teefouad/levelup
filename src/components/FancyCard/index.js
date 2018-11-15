@@ -67,10 +67,9 @@ class FancyCard extends Component {
           `}
           onClick={onClick}
         >
-          <Image
-            src={image}
-            alt={title}
+          <div
             className={css`
+              background: ${colors.primaryDark};
               border-radius: inherit;
               transition: all 500ms cubic-bezier(0.86, 0.05, 0.29, 0.88);
 
@@ -78,8 +77,23 @@ class FancyCard extends Component {
                 transform: rotateY(180deg);
               }
             `}
-            onLoad={() => this.setState({ imageLoading: false })}
-          />
+          >
+            <Image
+              src={image}
+              alt={title}
+              width={240}
+              height={359}
+              className={css`
+                border: 1px solid #e6e6e6;
+                border-radius: inherit;
+              `}
+              onLoad={() => this.setState({ imageLoading: false })}
+            />
+
+            {
+              imageLoading && <Spinner />
+            }
+          </div>
 
           <p
             className={css`
@@ -121,12 +135,8 @@ class FancyCard extends Component {
               }
             `}
           >
-            {description}
+            {description.length > 300 ? `${description.slice(0, 300)}...` : description}
           </p>
-
-          {
-            imageLoading && <Spinner />
-          }
         </div>
 
         <div
@@ -141,6 +151,10 @@ class FancyCard extends Component {
         >
           <h1
             className={css`
+              max-width: 100%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
               font-size: 16px;
               font-weight: 600;
               cursor: pointer;
@@ -150,6 +164,7 @@ class FancyCard extends Component {
                 color: ${colors.primary};
               }
             `}
+            title={title}
             onClick={onClick}
           >
             {title}

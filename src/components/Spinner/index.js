@@ -1,8 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
 
-import { colors } from '../../variables';
-
 const Spinner = (props) => (
   <span className={css`
     position: absolute;
@@ -14,7 +12,7 @@ const Spinner = (props) => (
     margin: -12px 0 0 -12px;
     z-index: 2;
     border: 2px solid rgba(220, 220, 220, 0.5);
-    border-top-color: ${colors.primary};
+    border-top-color: #fff;
     border-radius: 99px;
     animation: spin 650ms infinite linear;
 

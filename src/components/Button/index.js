@@ -47,6 +47,12 @@ class Button extends Component {
           &:active {
             background: ${colors.primary};
           }
+
+          &[disabled] {
+            opacity: 0.4;
+            pointer-events: none;
+            user-select: none;
+          }
         `}
         {...props}
       >
