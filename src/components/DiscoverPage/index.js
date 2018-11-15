@@ -10,7 +10,7 @@ class DiscoverPage extends Component {
   state = {
     page: 1,
     canLoadMore: true,
-    loading: false,
+    loading: true,
     movies: [],
   };
 
@@ -32,6 +32,7 @@ class DiscoverPage extends Component {
       movies: [
         ...state.movies,
         ...data.results.map(result => ({
+          id: result.id,
           title: result.title,
           description: result.overview,
           rating: result.vote_average,
@@ -57,7 +58,7 @@ class DiscoverPage extends Component {
         <FancyCardsList items={movies} />
 
         {
-          canLoadMore && (
+          (movies.length && canLoadMore) ? (
             <Button
               disabled={loading}
               onClick={this.loadMore}
@@ -73,7 +74,7 @@ class DiscoverPage extends Component {
                 loading ? 'Loading...' : 'Load more'
               }
             </Button>
-          )
+          ) : null
         }
       </div>
     );

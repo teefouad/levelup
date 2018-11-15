@@ -37,7 +37,6 @@ class Rating extends Component {
         className={css`
           display: flex;
           align-items: center;
-          justify-content: center;
           color: gold;
           ${className};
         `}
@@ -46,6 +45,7 @@ class Rating extends Component {
         <div
           className={css`
             position: relative;
+            font-size: 16px;
             letter-spacing: 0.2em;
           `}
         >
@@ -70,13 +70,14 @@ class Rating extends Component {
           </div>
         </div>
         
-        <p
+        <div
           className={css`
             margin-left: 10px;
+            font-size: 18px;
           `}
         >
           {value}
-        </p>
+        </div>
       </div>
     );
   }

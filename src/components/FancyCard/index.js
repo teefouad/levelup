@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
+import { Link } from '@reach/router';
 
 import Image from '../Image';
 import Spinner from '../Spinner';
@@ -14,8 +15,8 @@ class FancyCard extends Component {
     description: PropTypes.string,
     image: PropTypes.string,
     rating: PropTypes.number,
+    link: PropTypes.string,
     className: PropTypes.string,
-    onClick: PropTypes.func,
     onButtonClick: PropTypes.func,
   };
 
@@ -24,8 +25,8 @@ class FancyCard extends Component {
     description: '',
     image: '',
     rating: 0,
+    link: '',
     className: '',
-    onClick: () => null,
     onButtonClick: () => null,
   };
 
@@ -39,7 +40,7 @@ class FancyCard extends Component {
       description,
       image,
       rating,
-      onClick,
+      link,
       onButtonClick,
       className,
       ...props
@@ -57,23 +58,25 @@ class FancyCard extends Component {
         `}
         {...props}
       >
-        <div
+        <Link
+          to={link}
           className={css`
             position: relative;
             perspective: 950;
             perspective-origin: center 155px;
+            display: block;
             cursor: pointer;
             border-radius: 10px;
           `}
-          onClick={onClick}
         >
-          <div
+          <span
             className={css`
+              display: block;
               background: ${colors.primaryDark};
               border-radius: inherit;
               transition: all 500ms cubic-bezier(0.86, 0.05, 0.29, 0.88);
 
-              div:hover > & {
+              a:hover > & {
                 transform: rotateY(180deg);
               }
             `}
@@ -84,7 +87,6 @@ class FancyCard extends Component {
               width={240}
               height={359}
               className={css`
-                border: 1px solid #e6e6e6;
                 border-radius: inherit;
               `}
               onLoad={() => this.setState({ imageLoading: false })}
@@ -93,9 +95,9 @@ class FancyCard extends Component {
             {
               imageLoading && <Spinner />
             }
-          </div>
+          </span>
 
-          <p
+          <span
             className={css`
               display: flex;
               align-items: center;
@@ -130,14 +132,14 @@ class FancyCard extends Component {
                 border-radius: inherit;
               }
 
-              div:hover > & {
+              a:hover > & {
                 transform: rotateY(0);
               }
             `}
           >
             {description.length > 300 ? `${description.slice(0, 300)}...` : description}
-          </p>
-        </div>
+          </span>
+        </Link>
 
         <div
           className={css`
@@ -158,16 +160,23 @@ class FancyCard extends Component {
               font-size: 16px;
               font-weight: 600;
               cursor: pointer;
-              transition: color 200ms;
-
-              &:hover {
-                color: ${colors.primary};
-              }
             `}
             title={title}
-            onClick={onClick}
           >
-            {title}
+            <Link
+              to={link}
+              className={css`
+                text-decoration: none;
+                color: inherit;
+                transition: color 200ms;
+
+                &:hover {
+                  color: ${colors.primary};
+                }
+              `}
+            >
+              {title}
+            </Link>
           </h1>
 
           <Rating

@@ -1,5 +1,5 @@
 /* Fonts */
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700,800');
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,400i,600,700,800');
 
 /* FontAwesome Icons */
 @import url('https://use.fontawesome.com/releases/v5.3.1/css/solid.css');
@@ -23,4 +23,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   background: #f0f0f0;
+}
+
+p {
+  margin: 15px 0 0;
 }

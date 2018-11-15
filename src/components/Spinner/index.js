@@ -11,14 +11,40 @@ const Spinner = (props) => (
     height: 24px;
     margin: -12px 0 0 -12px;
     z-index: 2;
-    border: 2px solid rgba(220, 220, 220, 0.5);
-    border-top-color: #fff;
+    border-color: rgb(220, 220, 220);
     border-radius: 99px;
-    animation: spin 650ms infinite linear;
 
-    @keyframes spin {
-      to {
-        transform: rotate(359deg);
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      opacity: 0.25;
+      border: 2px solid transparent;
+      border-color: inherit;
+      border-radius: inherit;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      border: 2px solid transparent;
+      border-top-color: inherit;
+      border-radius: inherit;
+      animation: spin 450ms infinite linear;
+
+      @keyframes spin {
+        to {
+          transform: rotate(359deg);
+        }
       }
     }
 
