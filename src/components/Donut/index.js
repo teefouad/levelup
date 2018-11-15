@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
 
-import { colors } from '../../../variables';
+import { colors } from '../../variables';
 
 class Donut extends Component {
   static propTypes = {

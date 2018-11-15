@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 
-import { colors } from '../../../variables';
+import { colors } from '../../variables';
 
 const Spinner = (props) => (
   <span className={css`

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { css } from 'emotion';
 
 import Donut from '../Donut';
-import { colors } from '../../../variables';
+import { colors } from '../../variables';
 
 class Counter extends Component {
   static propTypes = {

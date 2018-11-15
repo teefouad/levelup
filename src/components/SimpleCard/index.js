@@ -5,7 +5,7 @@ import { css } from 'emotion';
 import Image from '../Image';
 import Rating from '../Rating';
 import Spinner from '../Spinner';
-import { colors } from '../../../variables';
+import { colors } from '../../variables';
 
 class SimpleCard extends Component {
   static propTypes = {
@@ -105,6 +105,10 @@ class SimpleCard extends Component {
           onLoad={() => this.setState({ imageLoading: false })}
         />
 
+        {
+          imageLoading && <Spinner />
+        }
+
         <h1
           className={css`
             position: absolute;
@@ -146,10 +150,6 @@ class SimpleCard extends Component {
             }
           `}
         />
-
-        {
-          imageLoading && <Spinner />
-        }
       </section>
     );
   }
