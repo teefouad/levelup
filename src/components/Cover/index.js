@@ -24,6 +24,7 @@ class Cover extends Component {
   state = {
     loading: true,
     dominantColor: '#333',
+    scrollPosition: 0,
   };
 
   getDominantColor = () => {
@@ -64,8 +65,24 @@ class Cover extends Component {
   };
 
   handleLoad = () => {
-    this.getDominantColor();
+    setTimeout(() => {
+      this.getDominantColor();
+    }, 10);
   };
+
+  handleScroll = (e) => {
+    this.setState({
+      scrollPosition: window.scrollY,
+    });
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
 
   render() {
     const {
@@ -79,15 +96,21 @@ class Cover extends Component {
     const {
       loading,
       dominantColor,
+      scrollPosition,
     } = this.state;
 
     return (
       <div
         className={css`
           overflow: hidden;
-          height: ${loading ? 0 : 'calc(100vh - 80px)'};
-          transition: height 800ms cubic-bezier(0.85, 0.01, 0.13, 1);
+          height: ${loading ? 0 : 'calc(90vh - 80px)'};
+          transition: height 800ms cubic-bezier(0.85, 0.01, 0.13, 1) 100ms;
           background: ${dominantColor};
+
+          > img {
+            transform: ${`translate(0, ${0.9 * scrollPosition}px)`};
+          }
+          
           ${className};
         `}
         {...props}
@@ -97,7 +120,7 @@ class Cover extends Component {
           alt={alt}
           className={css`
             width: 100%;
-            min-height: calc(100vh - 80px);
+            min-height: calc(90vh - 80px);
             opacity: ${loading ? 0 : 0.25};
             transition-delay: 800ms;
           `}

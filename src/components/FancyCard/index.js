@@ -11,6 +11,7 @@ import { colors } from '../../variables';
 
 class FancyCard extends Component {
   static propTypes = {
+    movieId: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
@@ -21,6 +22,7 @@ class FancyCard extends Component {
   };
 
   static defaultProps = {
+    movieId: '',
     title: '',
     description: '',
     image: '',
@@ -36,6 +38,7 @@ class FancyCard extends Component {
 
   render() {
     const {
+      movieId,
       title,
       description,
       image,
@@ -183,10 +186,11 @@ class FancyCard extends Component {
             value={rating}
             className={css`
               margin: 6px 0 15px;
+              justify-content: center;
             `}
           />
 
-          <SaveButton onClick={onButtonClick} />
+          <SaveButton onClick={onButtonClick} movieId={movieId} />
         </div>
       </section>
     );

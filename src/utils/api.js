@@ -28,8 +28,11 @@ const fetch = url => axios.get(url).then(response => response.data);
 
 export default {
   config: () => fetch(apiURL('configuration')),
-  discover: params => fetch(apiURL('discover/movie', params)),
+  discover: params => fetch(apiURL('discover/movie', { sort_by: 'popularity.desc', ...params })),
   search: params => fetch(apiURL('search/movie', params)),
   getGenres: params => fetch(apiURL('genre/movie/list', params)),
+  getMoviesFromGenre: (genreId, params) => fetch(apiURL('discover/movie', { with_genres: genreId, ...params })),
   getMovie: (movieId, params) => fetch(apiURL(`movie/${movieId}`, params)),
+  getSimilarMovies: (movieId, params) => fetch(apiURL(`movie/${movieId}/similar`, params)),
+  getCredits: (movieId, params) => fetch(apiURL(`movie/${movieId}/credits`, params)),
 };

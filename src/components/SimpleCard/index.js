@@ -138,6 +138,7 @@ class SimpleCard extends Component {
             right: 0;
             left: 0;
             z-index: 2;
+            justify-content: center;
             height: 50px;
             opacity: 0;
             color: inherit;

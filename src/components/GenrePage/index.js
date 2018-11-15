@@ -7,7 +7,7 @@ import Spinner from '../Spinner';
 import api from '../../utils/api';
 import { getImageURL } from '../../utils/helpers';
 
-class DiscoverPage extends Component {
+class GenrePage extends Component {
   state = {
     page: 1,
     canLoadMore: true,
@@ -19,7 +19,7 @@ class DiscoverPage extends Component {
     this.setState({
       loading: true,
     }, () => {
-      api.discover({
+      api.getMoviesFromGenre(this.props.genreId, {
         page: this.state.page + 1,
       }).then(this.handleLoadedData);
     });
@@ -44,7 +44,7 @@ class DiscoverPage extends Component {
   };
 
   componentDidMount() {
-    api.discover().then(this.handleLoadedData);
+    api.getMoviesFromGenre(this.props.genreId).then(this.handleLoadedData);
   }
 
   render() {
@@ -96,4 +96,4 @@ class DiscoverPage extends Component {
   }
 }
 
-export default DiscoverPage;
+export default GenrePage;

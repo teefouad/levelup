@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { Link } from '@reach/router';
 import { css } from 'emotion';
 
-import Image from '../Image';
 import Spinner from '../Spinner';
 import Cover from '../Cover';
-import api from '../../utils/api';
 import Rating from '../Rating';
 import SaveButton from '../SaveButton';
-import { colors } from '../../variables';
+import SimpleCard from '../SimpleCard';
+import api from '../../utils/api';
+import { getImageURL } from '../../utils/helpers';
 
 const Divider = () => (
   <hr
@@ -31,27 +30,57 @@ class DetailsPage extends Component {
     movieId: '',
   };
 
-  state = {
+  initialState = {
     loading: true,
     movieData: {},
+    loadingSimilarMovies: true,
+    similarMovies: [],
   };
 
-  componentDidMount() {
+  state = this.initialState;
+
+  loadMovieData = () => {
     const {
       movieId,
     } = this.props;
-    
+
+    this.setState(this.initialState);
+
     api.getMovie(movieId).then((data) => {
       this.setState({
         movieData: data,
       });
     });
+
+    api.getSimilarMovies(movieId).then((data) => {
+      this.setState({
+        loadingSimilarMovies: false,
+        similarMovies: data.results,
+      })
+    });
+  }
+  
+  componentDidMount() {
+    this.loadMovieData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.movieId !== this.props.movieId) {
+      this.loadMovieData();
+      window.scrollTo(0, 0);
+    }
   }
 
   render() {
     const {
+      movieId,
+    } = this.props;
+
+    const {
       loading,
       movieData,
+      loadingSimilarMovies,
+      similarMovies,
     } = this.state;
 
     const {
@@ -65,7 +94,11 @@ class DetailsPage extends Component {
     } = movieData;
     
     return (
-      <div>
+      <div
+        className={css`
+          padding: 80px 0;
+        `}
+      >
         {
           image && (
             <Cover
@@ -80,7 +113,6 @@ class DetailsPage extends Component {
           loading && (
             <Spinner
               className={css`
-                border-color: ${colors.primary};
                 transform: scale(2);
               `}
             />
@@ -107,7 +139,7 @@ class DetailsPage extends Component {
             color: #fff;
             opacity: ${loading ? 0 : 1};
             pointer-events: ${loading ? 'none' : ''};
-            transition: opacity 200ms linear 800ms;
+            transition: ${loading ? 'none' : 'opacity 200ms linear 800ms'};
           `}
         >
           {title}
@@ -118,7 +150,7 @@ class DetailsPage extends Component {
               margin-top: 20px;
               font-size: 20px;
               font-style: italic;
-              color: rgba(255, 255, 255, 0.7);
+              color: rgba(255, 255, 255, 0.85);
             `}
           >{tagline}</small>
         </h1>
@@ -126,7 +158,7 @@ class DetailsPage extends Component {
         <div
           className={css`
             position: relative;
-            z-index: 999;
+            z-index: 9;
             max-width: 700px;
             padding: 40px;
             margin: -120px auto 0;
@@ -137,10 +169,10 @@ class DetailsPage extends Component {
             opacity: ${loading ? 0 : 1};
             pointer-events: ${loading ? 'none' : ''};
             transform: ${loading ? 'translate(0, -10px)' : 'translate(0, 0)'};
-            transition: opacity 200ms linear 500ms, transform 400ms cubic-bezier(0.11, 0.35, 0.32, 1) 500ms;
+            transition: ${loading ? 'none' : 'opacity 200ms linear 500ms, transform 400ms cubic-bezier(0.11, 0.35, 0.32, 1) 500ms'};
 
             strong {
-              font-size: 16px;
+              font-weight: 600;
             }
           `}
         >
@@ -157,7 +189,7 @@ class DetailsPage extends Component {
               Released {releaseDate}
             </div>
 
-            <SaveButton />
+            <SaveButton movieId={movieId} />
           </div>
 
           <Divider />
@@ -168,7 +200,13 @@ class DetailsPage extends Component {
               justify-content: space-between;
             `}
           >
-            <strong>Genres</strong>
+            <strong
+              className={css`
+                font-size: 16px;
+              `}
+            >
+              Genres
+            </strong>
 
             <ul
               className={css`
@@ -214,11 +252,65 @@ class DetailsPage extends Component {
           <Divider />
 
           <div>
-            <strong>Overview</strong>
+            <strong
+              className={css`
+                font-size: 16px;
+              `}
+            >
+              Overview
+            </strong>
+
             <p>
               {overview}
             </p>
           </div>
+
+          {
+            similarMovies.length > 0 && (
+              <>
+                <Divider />
+
+                <div>
+                  <strong
+                    className={css`
+                      font-size: 20px;
+                    `}
+                  >
+                    Similar Movies
+                  </strong>
+
+                  {
+                    loadingSimilarMovies ? (
+                      <div>Fetching similar movies...</div>
+                    ) : (
+                        <div
+                          className={css`
+                            display: grid;
+                            grid-template-columns: repeat(3, 1fr);
+                            grid-gap: 30px;
+                            margin: 20px 0 0;
+                          `}
+                        >
+                          {
+                            similarMovies.slice(0, 6).map((movie) => (
+                              <SimpleCard
+                                key={movie.title}
+                                title={movie.title}
+                                image={getImageURL(movie.poster_path, 'w780')}
+                                rating={movie.vote_average}
+                                onClick={() => {
+                                  this.props.navigate(`/movie/${movie.id}`);
+                                }}
+                              />
+                            ))
+                          }
+                        </div>
+                    )
+                  }
+                </div>
+              </>
+            )
+          }
 
         </div>
       </div>

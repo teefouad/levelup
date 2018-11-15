@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { css } from 'emotion';
 
+import CounterContext from '../../contexts/CounterContext';
 import Donut from '../Donut';
 import { colors } from '../../variables';
+
 
 class Counter extends Component {
   static propTypes = {
@@ -17,12 +19,18 @@ class Counter extends Component {
     max: 10,
   };
 
+  static contextType = CounterContext;
+
   render() {
     const {
-      value,
       max,
     } = this.props;
 
+    const {
+      savedMovies,
+    } = this.context;
+
+    const value = savedMovies.length;
     const valueAsString = value > 9 ? '9+' : value;
 
     return (

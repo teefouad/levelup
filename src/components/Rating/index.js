@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
+import classnames from 'classnames';
 
 class Rating extends Component {
   static propTypes = {
@@ -34,12 +35,12 @@ class Rating extends Component {
     return (
       <div
         title={`${value} / ${scale}`}
-        className={css`
+        className={classnames('rating', css`
           display: flex;
           align-items: center;
           color: gold;
           ${className};
-        `}
+        `)}
         {...props}
       >
         <div

@@ -11,7 +11,7 @@ const Spinner = (props) => (
     height: 24px;
     margin: -12px 0 0 -12px;
     z-index: 2;
-    border-color: rgb(220, 220, 220);
+    border-color: #999;
     border-radius: 99px;
 
     &:before {

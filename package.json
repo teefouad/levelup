@@ -8,9 +8,11 @@
     "classnames": "^2.2.6",
     "colorthief": "^2.0.2",
     "emotion": "^9.2.12",
+    "node-sass": "^4.10.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "styled-components": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

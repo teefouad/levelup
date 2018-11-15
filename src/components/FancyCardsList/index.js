@@ -39,6 +39,7 @@ class FancyCardsList extends Component {
           items.map(item => (
             <FancyCard
               key={item.title}
+              movieId={item.id.toString()}
               link={`/movie/${item.id}`}
               title={item.title}
               description={item.description}
